@@ -1,0 +1,64 @@
+{
+  "common": {
+    "all": "all",
+    "duration": "duration",
+    "concept": "concept",
+    "home": "home",
+    "instructor": "teacher",
+    "instrument": "instrument",
+    "language": "language",
+    "lessons": "lessons",
+    "minutes": "minutes",
+    "price": "price",
+    "rating": "rating",
+    "songID": "song identifier",
+    "songs": "songs"
+  },
+  "filter": {
+    "allInstruments": "all instruments",
+    "allLanguages": "all languages",
+    "byInstrument": "filter by instrument",
+    "byLanguage": "filter by language"
+  },
+  "pagination": {
+    "elementPerPage": "element per page",
+    "nextPage": "next page",
+    "pageOn": "page {{current}} on {{total}}",
+    "previousPage": "previous page"
+  },
+  "language": {
+    "en": "english",
+    "fr": "french"
+  },
+  "instrument": {
+    "acoustic-guitar": "acoustic guitar",
+    "bass": "bass",
+    "cello": "cello",
+    "electric-guitar": "electric guitar",
+    "flute": "flute",
+    "drums": "drums",
+    "piano": "piano",
+    "saxophone": "saxophone",
+    "trumpet": "trumpet",
+    "violin": "violin"
+  },
+  "home": {
+    "topMessage": "welcome to the Cover Academy, the school where you learn music by playing your favorite songs."
+  },
+  "songs": {
+    "topMessage": "choose your favorite song"
+  },
+  "song": {
+    "artist": "Artist",
+    "releaseYear": "Release Year",
+    "tempo": "Tempo",
+    "genre": "Genre",
+    "version": "Version",
+    "key": "Key",
+    "associatedCourses": "Associated Courses"
+  },
+  "footer": {
+    "allRightReserved": "all rights reserved",
+    "numberOfCourse": "number of courses on the platform"
+  }
+}

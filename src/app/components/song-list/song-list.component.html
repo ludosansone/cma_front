@@ -1,0 +1,46 @@
+<h1>{{ 'common.songs' | translate }}</h1>
+
+<p>{{ 'songs.topMessage' | translate }}</p>
+
+<div>
+  {{ 'filter.byInstrument' | translate }}
+  <select (change)="onInstrumentFilterChange($event)">
+    <option value="">{{ 'filter.allInstruments' | translate }}</option>
+    @for (instrument of instruments$ | async; track instrument.id) {
+      <option [value]="instrument.id">{{ instrument.nameKey | translate }}</option>
+    }
+  </select>
+</div>
+
+<div>
+  {{ 'pagination.elementPerPage' | translate }}
+  <select (change)="onPageSizeChange($event)">
+    @for (size of pageSizeOptions; track size) {
+      <option [value]="size">{{ size === 'all' ? ('common.all' | translate) : size }}</option>
+    }
+  </select>
+</div>
+
+<ul>
+  @for (song of pagedSongs$ | async; track trackBySongId) {
+    <li>
+      <a [routerLink]="['/songs', song.id]">
+        {{ song.title }} - {{ song.artist }} ({{ song.availableInstrumentNames.join(', ') }})
+      </a>
+    </li>
+  }
+</ul>
+
+@if ((pageSize$ | async) !== 'all') {
+  <button (click)="onPreviousPage()" [disabled]="(currentPage$ | async) === 1">
+    {{ 'pagination.previousPage' | translate }}
+  </button>
+
+  <span>
+    {{ 'pagination.pageOn' | translate: { current: (currentPage$ | async), total: (totalPages$ | async) } }}
+  </span>
+
+  <button (click)="onNextPage()" [disabled]="(currentPage$ | async) === (totalPages$ | async)">
+    {{ 'pagination.nextPage' | translate }}
+  </button>
+}

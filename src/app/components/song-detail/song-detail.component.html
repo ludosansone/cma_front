@@ -1,0 +1,31 @@
+@if (song$ | async; as song) {
+  <h1>{{ song.title }}</h1>
+
+  <p>{{ 'song.artist' | translate }}: {{ song.artist }}</p>
+
+  <p>{{ 'song.releaseYear' | translate }}: {{ song.originalReleaseYear }}</p>
+
+  <p>{{ 'song.tempo' | translate }}: {{ song.tempo }} BPM</p>
+
+  <p>{{ 'song.genre' | translate }}: {{ song.genre }}</p>
+
+  <p>{{ 'common.language' | translate }}: {{ 'language.' + song.language | translate }}</p>
+
+  <p>{{ 'song.version' | translate }}: {{ song.version }}</p>
+
+  <p>{{ 'song.key' | translate }}: {{ song.key }}</p>
+
+  <h2>{{ 'song.associatedCourses' | translate }}</h2>
+
+  @if (courses$ | async; as courses) {
+    <ul>
+      @for (course of courses; track course.course.id) {
+        <li>
+          <a [routerLink]="['/courses', course.course.id]">
+            {{ course.course.title }} - {{ course.instructor.name }}
+          </a>
+        </li>
+      }
+    </ul>
+  }
+}

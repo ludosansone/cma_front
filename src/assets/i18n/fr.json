@@ -1,0 +1,64 @@
+{
+  "common": {
+    "all": "tous",
+    "concept": "compétence",
+    "duration": "durée",
+    "home": "accueil",
+    "instructor": "professeur",
+    "instrument": "instrument",
+    "language": "langue",
+    "lessons": "cours",
+    "minutes": "minutes",
+    "price": "prix",
+    "rating": "évaluation",
+    "songID": "identifiant du morceau",
+    "songs": "morceaux"
+  },
+  "filter": {
+    "allInstruments": "tous les instruments",
+    "allLanguages": "toutes les langues",
+    "byInstrument": "filtrer par instrument",
+    "byLanguage": "filtrer par langue"
+  },
+  "pagination": {
+    "elementPerPage": "élément par page",
+    "nextPage": "page suivante",
+    "pageOn": "page {{current}} sur {{total}}",
+    "previousPage": "page précédente"
+  },
+  "language": {
+    "en": "anglais",
+    "fr": "français"
+  },
+  "instrument": {
+    "acoustic-guitar": "guitare acoustique",
+    "bass": "basse",
+    "cello": "violoncelle",
+    "drums": "batterie",
+    "electric-guitar": "guitare électrique",
+    "flute": "flûte",
+    "piano": "piano",
+    "saxophone": "saxophone",
+    "trumpet": "trompette",
+    "violin": "violon"
+  },
+  "home": {
+    "topMessage": "bienvenue à la Cover Academy, l'école où vous apprenez la musique en jouant vos chansons préférées."
+  },
+  "songs": {
+    "topMessage": "choisissez votre chanson favorite"
+  },
+  "song": {
+    "artist": "Artiste",
+    "releaseYear": "Année de sortie",
+    "tempo": "Tempo",
+    "genre": "Genre",
+    "version": "Version",
+    "key": "Tonalité",
+    "associatedCourses": "Cours associés"
+  },
+  "footer": {
+    "allRightReserved": "tous droits réservés",
+    "numberOfCourse": "nombre de cours sur la plateforme"
+  }
+}

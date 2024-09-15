@@ -1,0 +1,24 @@
+@if (courseWithInstructor$ | async; as courseWithInstructor) {
+  <h1>{{ courseWithInstructor.course.title }}</h1>
+
+  <p>{{ courseWithInstructor.course.description }}</p>
+
+  <p>{{ 'common.instructor' | translate }}: {{ courseWithInstructor.instructor.name }}</p>
+
+  <p>{{ 'common.duration' | translate }}: {{ courseWithInstructor.course.duration }} {{ 'common.minutes' | translate }}</p>
+
+  <p>{{ 'common.price' | translate }}: {{ courseWithInstructor.course.price | currency }}</p>
+
+  <p>{{ 'common.language' | translate }}: {{ 'language.' + courseWithInstructor.course.language | translate }}</p>
+
+  <p>{{ 'common.rating' | translate }}: {{ courseWithInstructor.course.star_rating }}/5</p>
+
+  @switch (courseWithInstructor.course.category) {
+    @case ('initial') {
+      <p>{{ 'common.concept' | translate }}: {{ getConcept(courseWithInstructor.course) }}</p>
+    }
+    @case ('cover') {
+      <p>{{ 'common.songID' | translate }}: {{ getSongId(courseWithInstructor.course) }}</p>
+    }
+  }
+}

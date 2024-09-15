@@ -1,0 +1,10 @@
+<header>
+  <h1>{{ title }}</h1>
+  <nav>
+    <ul>
+      <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">{{ 'common.home' | translate }}</a></li>
+      <li><a routerLink="/initial-courses" routerLinkActive="active">{{ 'common.lessons' | translate }}</a></li>
+      <li><a routerLink="/songs" routerLinkActive="active">{{ 'common.songs' | translate }}</a></li>
+    </ul>
+  </nav>
+</header>

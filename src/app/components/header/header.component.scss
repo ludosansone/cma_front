@@ -1,0 +1,29 @@
+header {
+  background-color: var(--secondary-color);
+  padding: 1rem 0;
+  box-shadow: 0 2px 5px rgba(255, 0, 0, 0.2);
+
+  nav {
+    ul {
+      list-style-type: none;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+
+      li {
+        margin: 0 15px;
+
+        a {
+          color: var(--text-color);
+          font-weight: bold;
+          text-transform: uppercase;
+          transition: color 0.3s ease;
+
+          &:hover {
+            color: var(--primary-color);
+          }
+        }
+      }
+    }
+  }
+}
