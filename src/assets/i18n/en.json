@@ -12,7 +12,9 @@
     "price": "price",
     "rating": "rating",
     "songID": "song identifier",
-    "songs": "songs"
+    "songs": "songs",
+    "videoPreview": "video preview",
+    "videoNotSupported": "your browser does not support the video tag."
   },
   "filter": {
     "allInstruments": "all instruments",

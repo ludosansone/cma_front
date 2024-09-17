@@ -12,7 +12,9 @@
     "price": "prix",
     "rating": "évaluation",
     "songID": "identifiant du morceau",
-    "songs": "morceaux"
+    "songs": "morceaux",
+    "videoPreview": "aperçu vidéo",
+    "videoNotSupported": "votre navigateur ne prend pas en charge la balise vidéo."
   },
   "filter": {
     "allInstruments": "tous les instruments",
