@@ -79,6 +79,11 @@ export class CourseListComponent implements OnInit {
     );
   }
 
+  getInstrumentKey(instrumentId: number, instruments: Instrument[]): string {
+    const instrument = instruments.find(i => i.id === instrumentId);
+    return instrument ? instrument.nameKey.split('.')[1] : 'unknown';
+  }
+
   onPageSizeChange(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
     const newSize = selectElement.value === 'all' ? 'all' : Number(selectElement.value);

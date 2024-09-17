@@ -1,57 +1,62 @@
 <h1>{{ 'common.lessons' | translate }}</h1>
 
 <div>
-  {{ 'filter.byInstrument' | translate }}
+  <label>{{ 'filter.byInstrument' | translate }}</label>
   <select (change)="onInstrumentFilterChange($event)">
     <option value="">{{ 'filter.allInstruments' | translate }}</option>
-    <option *ngFor="let instrument of instruments$ | async" [value]="instrument.id">
-      {{ instrument.nameKey | translate }}
-    </option>
+    @for (instrument of instruments$ | async; track instrument.id) {
+      <option [value]="instrument.id">{{ instrument.nameKey | translate }}</option>
+    }
   </select>
 </div>
 
 <div>
-  {{ 'filter.byLanguage' | translate }}
+  <label>{{ 'filter.byLanguage' | translate }}</label>
   <select (change)="onLanguageFilterChange($event)">
     <option value="">{{ 'filter.allLanguages' | translate }}</option>
-    <option *ngFor="let lang of languages" [value]="lang">
-      {{ 'language.' + lang | translate }}
-    </option>
+    @for (lang of languages; track lang) {
+      <option [value]="lang">{{ 'language.' + lang | translate }}</option>
+    }
   </select>
 </div>
 
 <div>
-  {{ 'pagination.elementPerPage' | translate }}
+  <label>{{ 'pagination.elementPerPage' | translate }}</label>
   <select (change)="onPageSizeChange($event)">
-    <option *ngFor="let size of pageSizeOptions" [value]="size">
-      {{ size === 'all' ? ('common.all' | translate) : size }}
-    </option>
+    @for (size of pageSizeOptions; track size) {
+      <option [value]="size">{{ size === 'all' ? ('common.all' | translate) : size }}</option>
+    }
   </select>
 </div>
 
 <ul>
-  <li *ngFor="let courseWithInstructor of pagedCourses$ | async; trackBy: trackByCourseId">
-    <a [routerLink]="['/courses', courseWithInstructor.course.id]">
-      {{ courseWithInstructor.course.title }} - {{ courseWithInstructor.instructor.name }}
-      {{ 'common.instrument' | translate }}: {{ courseWithInstructor.course.instrument_id }}
-      <ng-container *ngIf="courseWithInstructor.course.category === 'initial'">
-        {{ 'common.concept' | translate }}: {{ courseWithInstructor.course.concept }}
-      </ng-container>
-      <ng-container *ngIf="courseWithInstructor.course.category === 'cover'">
-        {{ 'common.song' | translate }} ID: {{ courseWithInstructor.course.song_id }}
-      </ng-container>
-    </a>
-  </li>
+  @for (courseWithInstructor of pagedCourses$ | async; track trackByCourseId) {
+    <li>
+      <a [routerLink]="['/courses', courseWithInstructor.course.id]">
+        {{ courseWithInstructor.course.title }} - {{ courseWithInstructor.instructor.name }}
+        {{ 'common.instrument' | translate }}: 
+        @if (instruments$ | async; as instruments) {
+          {{ 'instrument.' + getInstrumentKey(courseWithInstructor.course.instrument_id, instruments) | translate }}
+        }
+        @if (courseWithInstructor.course.category === 'initial') {
+          {{ 'common.concept' | translate }}: {{ courseWithInstructor.course.concept }}
+        }
+        @if (courseWithInstructor.course.category === 'cover') {
+          {{ 'common.song' | translate }} ID: {{ courseWithInstructor.course.song_id }}
+        }
+      </a>
+    </li>
+  }
 </ul>
 
-<button (click)="onPreviousPage()" [disabled]="(currentPage$ | async) === 1">
-  {{ 'pagination.previousPage' | translate }}
-</button>
-
-<span>
-  {{ 'pagination.pageOn' | translate: { current: (currentPage$ | async), total: (totalPages$ | async) } }}
-</span>
-
-<button (click)="onNextPage()" [disabled]="(currentPage$ | async) === (totalPages$ | async)">
-  {{ 'pagination.nextPage' | translate }}
-</button>
+@if ((pageSize$ | async) !== 'all') {
+  <button (click)="onPreviousPage()" [disabled]="(currentPage$ | async) === 1">
+    {{ 'pagination.previousPage' | translate }}
+  </button>
+  <span>
+    {{ 'pagination.pageOn' | translate: { current: (currentPage$ | async), total: (totalPages$ | async) } }}
+  </span>
+  <button (click)="onNextPage()" [disabled]="(currentPage$ | async) === (totalPages$ | async)">
+    {{ 'pagination.nextPage' | translate }}
+  </button>
+}
