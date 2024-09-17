@@ -24,7 +24,7 @@
 
   <div>
     <h2>{{ 'common.videoPreview' | translate }}</h2>
-    <video controls width="100%">
+    <video controls preload="metadata" width="100%">
       <source [src]="courseWithInstructor.course.video_url" type="video/mp4">
       {{ 'common.videoNotSupported' | translate }}
     </video>
