@@ -24,9 +24,13 @@
 
   <div>
     <h2>{{ 'common.videoPreview' | translate }}</h2>
-    <video controls preload="metadata" width="100%">
+    <video controls>
       <source [src]="courseWithInstructor.course.video_url" type="video/mp4">
       {{ 'common.videoNotSupported' | translate }}
     </video>
   </div>
+
+  <a [routerLink]="['/courses', courseWithInstructor.course.id, 'content']" class="btn-course-content">
+    {{ 'course.viewContent' | translate }}
+  </a>
 }

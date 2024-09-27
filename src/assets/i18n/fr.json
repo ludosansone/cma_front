@@ -59,6 +59,14 @@
     "key": "Tonalité",
     "associatedCourses": "Cours associés"
   },
+  "course": {
+    "additionalResources": "ressources complémentaires",
+    "chapterContent": "contenu du chapitre",
+    "chapterList": "liste des chapitres",
+    "currentChapter": "chapitre sélectionné",
+    "videoPlayer": "lecteur vidéo",
+    "viewContent": "accéder au cours"
+  },
   "footer": {
     "allRightReserved": "tous droits réservés",
     "numberOfCourse": "nombre de cours sur la plateforme"

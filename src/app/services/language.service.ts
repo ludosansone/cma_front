@@ -10,6 +10,7 @@ export class LanguageService {
   initializeLanguage() {
     const browserLang = navigator.language.split('-')[0];
     const lang = ['en', 'fr'].includes(browserLang) ? browserLang : 'en';
+    console.log('Detected language:', lang);
     this.translate.setDefaultLang('en');
     this.translate.use(lang);
   }

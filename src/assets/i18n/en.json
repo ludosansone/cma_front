@@ -59,6 +59,14 @@
     "key": "Key",
     "associatedCourses": "Associated Courses"
   },
+  "course": {
+    "additionalResources": "additional resources",
+    "chapterContent": "chapter content",
+    "chapterList": "chapters list",
+    "currentChapter": "selected chapter",
+    "videoPlayer": "video player",
+    "viewContent": "Access the lesson"
+  },
   "footer": {
     "allRightReserved": "all rights reserved",
     "numberOfCourse": "number of courses on the platform"

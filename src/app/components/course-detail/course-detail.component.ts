@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AsyncPipe, NgIf, NgSwitch, NgSwitchCase, CurrencyPipe } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CourseService } from '../../services/course.service';
 import { Observable, switchMap, map } from 'rxjs';
 import { CourseWithInstructor, InitialCourse, CoverCourse, Course } from '../../models/course.model';
@@ -9,7 +9,7 @@ import { TranslateModule } from '@ngx-translate/core';
 @Component({
   selector: 'app-course-detail',
   standalone: true,
-  imports: [AsyncPipe, NgIf, NgSwitch, NgSwitchCase, TranslateModule, CurrencyPipe],
+  imports: [AsyncPipe, NgIf, NgSwitch, NgSwitchCase, TranslateModule, CurrencyPipe, RouterLink],
   templateUrl: './course-detail.component.html',
   styleUrls: ['./course-detail.component.scss']
 })

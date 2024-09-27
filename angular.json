@@ -17,6 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "baseHref": "/",
             "outputPath": "dist/coveracademy",
             "index": "src/index.html",
             "browser": "src/main.ts",
@@ -30,22 +31,46 @@
               "src/assets",
               {
                 "glob": "**/*",
-                "input": "public",
-                "output": "/"
+                "input": "src/assets",
+                "output": "/assets/"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/assets/i18n",
+                "output": "/assets/i18n/"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/video.js/dist",
+                "output": "/assets/video-js/"
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              {
+                "input": "node_modules/video.js/dist/video-js.min.css",
+                "bundleName": "video-js",
+                "inject": false
+              }
             ],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "video.js",
+              "@videojs/xhr",
+              "global/window",
+              "global/document",
+              "videojs-vtt.js",
+              "mux.js/lib/tools/parse-sidx",
+              "mux.js/lib/utils/clock"
+            ]
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "2MB",
+                  "maximumError": "5MB"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -65,6 +90,9 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "proxyConfig": "src/proxy.conf.json"
+          },
           "configurations": {
             "production": {
               "buildTarget": "coveracademy:build:production"
@@ -94,10 +122,20 @@
                 "glob": "**/*",
                 "input": "public",
                 "output": "/"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/video.js/dist",
+                "output": "/assets/video-js/"
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              {
+                "input": "node_modules/video.js/dist/video-js.min.css",
+                "bundleName": "video-js",
+                "inject": false
+              }
             ],
             "scripts": []
           }

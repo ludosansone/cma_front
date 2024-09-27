@@ -23,5 +23,6 @@ export class AppComponent implements OnInit   {
 
   ngOnInit() {
     this.languageService.initializeLanguage();
+    console.log("Language initialisation...");
   }
 }
