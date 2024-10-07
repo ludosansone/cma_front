@@ -1,32 +1,42 @@
 <div class="course-content" *ngIf="courseWithInstructor">
   <h1>{{ courseWithInstructor.course.title }}</h1>
-  
+
   <div class="chapter-list">
-    <h2>{{ 'course.chapterList' | translate }}</h2>
+    <h2>{{ 'course.content.chapterList' | translate }}</h2>
     <ul>
-      <li *ngFor="let chapter of chapters" 
-          (click)="selectChapter(chapter)"
-          [class.active]="chapter.id === currentChapter?.id">
+      <li *ngFor="let chapter of chapters" (click)="selectChapter(chapter)">
         {{ chapter.title }}
       </li>
     </ul>
   </div>
 
   <div class="chapter-display" *ngIf="currentChapter">
-    <h2>{{ 'course.currentChapter' | translate }}: {{ currentChapter.title }}</h2>
-    
-    <div class="video-player">
-      <h3>{{ 'course.videoPlayer' | translate }}</h3>
-      <video #videoPlayer class="video-js vjs-default-skin vjs-big-play-centered"></video>
+    <h2>{{ 'course.content.currentChapter' | translate }}: {{ currentChapter.title }}</h2>
+
+    <div class="custom-video-player">
+      <video #videoPlayer (contextmenu)="$event.preventDefault()">
+        <source [src]="currentChapter.video_url" type="video/mp4">
+        {{ 'course.content.videoNotSupported' | translate }}
+      </video>
+      <div class="video-controls">
+        <button (click)="togglePlay()">{{ isPlaying ? 'Pause' : 'Play' }}</button>
+        <button (click)="seekVideo(-10)">-10s</button>
+        <button (click)="seekVideo(10)">+10s</button>
+        <span class="time-display">{{ currentTime }} / {{ duration }}</span>
+        <input #seekBar type="range" min="0" [max]="videoPlayer?.duration || 0" [value]="videoPlayer?.currentTime || 0" (input)="onSeekBarChange()" class="seek-bar">
+        <div class="progress-container" (click)="onProgressBarClick($event)">
+          <div #progressBar class="progress-bar"></div>
+        </div>
+      </div>
     </div>
 
     <div class="chapter-content">
-      <h3>{{ 'course.chapterContent' | translate }}</h3>
+      <h3>{{ 'course.content.chapterContent' | translate }}</h3>
       <p>{{ currentChapter.content }}</p>
     </div>
 
     <div class="additional-resources" *ngIf="currentChapter.additional_resources && currentChapter.additional_resources.length > 0">
-      <h3>{{ 'course.additionalResources' | translate }}</h3>
+      <h3>{{ 'course.content.additionalResources' | translate }}</h3>
       <ul>
         <li *ngFor="let resource of currentChapter.additional_resources">
           <a [href]="resource" target="_blank">{{ resource }}</a>

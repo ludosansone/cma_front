@@ -47,11 +47,7 @@
             ],
             "styles": [
               "src/styles.scss",
-              {
-                "input": "node_modules/video.js/dist/video-js.min.css",
-                "bundleName": "video-js",
-                "inject": false
-              }
+              "node_modules/video.js/dist/video-js.min.css"
             ],
             "scripts": [],
             "allowedCommonJsDependencies": [
@@ -90,9 +86,6 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "proxyConfig": "src/proxy.conf.json"
-          },
           "configurations": {
             "production": {
               "buildTarget": "coveracademy:build:production"

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -7,7 +7,6 @@ import { ChapterService } from '../../services/chapter.service';
 import { CourseWithInstructor } from '../../models/course.model';
 import { Chapter } from '../../models/chapter.model';
 import { switchMap, tap } from 'rxjs/operators';
-import videojs from 'video.js';
 
 @Component({
   selector: 'app-course-content',
@@ -16,13 +15,17 @@ import videojs from 'video.js';
   templateUrl: './course-content.component.html',
   styleUrls: ['./course-content.component.scss']
 })
-export class CourseContentComponent implements OnInit, OnDestroy, AfterViewInit {
-  @ViewChild('videoPlayer', { static: true }) videoPlayer!: ElementRef;
+export class CourseContentComponent implements OnInit, AfterViewInit {
+  @ViewChild('videoPlayer') videoPlayer!: ElementRef<HTMLVideoElement>;
+  @ViewChild('progressBar') progressBar!: ElementRef<HTMLDivElement>;
+  @ViewChild('seekBar') seekBar!: ElementRef<HTMLInputElement>;
 
   courseWithInstructor: CourseWithInstructor | null = null;
   chapters: Chapter[] = [];
   currentChapter: Chapter | null = null;
-  player: any;
+  isPlaying: boolean = false;
+  currentTime: string = '0:00';
+  duration: string = '0:00';
 
   constructor(
     private route: ActivatedRoute,
@@ -56,50 +59,81 @@ export class CourseContentComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   ngAfterViewInit(): void {
-    this.initializeVideoPlayer();
-  }
+    if (this.videoPlayer) {
+      const video = this.videoPlayer.nativeElement;
+      
+      video.addEventListener('durationchange', () => {
+        if (!isNaN(video.duration) && isFinite(video.duration)) {
+          this.duration = this.formatTime(video.duration);
+          if (this.seekBar) {
+            this.seekBar.nativeElement.max = `${video.duration}`;
+          }
+        }
+      });
 
-  ngOnDestroy(): void {
-    if (this.player) {
-      this.player.dispose();
+      video.addEventListener('timeupdate', () => {
+        if (!isNaN(video.currentTime) && isFinite(video.currentTime)) {
+          this.currentTime = this.formatTime(video.currentTime);
+          if (this.progressBar && !isNaN(video.duration) && video.duration > 0) {
+            const progress = (video.currentTime / video.duration) * 100;
+            this.progressBar.nativeElement.style.width = `${progress}%`;
+          }
+          if (this.seekBar) {
+            this.seekBar.nativeElement.value = `${video.currentTime}`;
+          }
+        }
+      });
     }
   }
 
   selectChapter(chapter: Chapter): void {
     this.currentChapter = chapter;
-    if (this.player && chapter.video_url) {
-      this.player.src({ type: 'video/mp4', src: chapter.video_url });
+    if (this.videoPlayer && chapter.video_url) {
+      this.videoPlayer.nativeElement.src = chapter.video_url;
+      this.videoPlayer.nativeElement.load();
+      this.isPlaying = false;
+      this.currentTime = '0:00';
+      this.duration = '0:00';
     }
   }
 
-  private initializeVideoPlayer(): void {
-    if (this.currentChapter && this.currentChapter.video_url) {
-      this.player = videojs(this.videoPlayer.nativeElement, {
-        controls: true,
-        autoplay: false,
-        preload: 'auto',
-        fluid: true,
-        sources: [{ type: 'video/mp4', src: this.currentChapter.video_url }],
-        controlBar: {
-          children: [
-            'playToggle',
-            'volumePanel',
-            'currentTimeDisplay',
-            'timeDivider',
-            'durationDisplay',
-            'progressControl',
-            'liveDisplay',
-            'remainingTimeDisplay',
-            'customControlSpacer',
-            'playbackRateMenuButton',
-            'chaptersButton',
-            'descriptionsButton',
-            'subsCapsButton',
-            'audioTrackButton',
-            'fullscreenToggle'
-          ]
-        }
-      });
+  togglePlay(): void {
+    if (this.videoPlayer) {
+      if (this.isPlaying) {
+        this.videoPlayer.nativeElement.pause();
+      } else {
+        this.videoPlayer.nativeElement.play();
+      }
+      this.isPlaying = !this.isPlaying;
     }
+  }
+
+  seekVideo(seconds: number): void {
+    if (this.videoPlayer) {
+      this.videoPlayer.nativeElement.currentTime += seconds;
+    }
+  }
+
+  onSeekBarChange(): void {
+    if (this.videoPlayer && this.seekBar) {
+      this.videoPlayer.nativeElement.currentTime = Number(this.seekBar.nativeElement.value);
+    }
+  }
+
+  onProgressBarClick(event: MouseEvent): void {
+    if (this.videoPlayer && this.progressBar) {
+      const rect = this.progressBar.nativeElement.getBoundingClientRect();
+      const clickPosition = (event.clientX - rect.left) / rect.width;
+      this.videoPlayer.nativeElement.currentTime = clickPosition * this.videoPlayer.nativeElement.duration;
+    }
+  }
+
+  formatTime(timeInSeconds: number): string {
+    if (isNaN(timeInSeconds) || !isFinite(timeInSeconds)) {
+      return '0:00';
+    }
+    const minutes = Math.floor(timeInSeconds / 60);
+    const seconds = Math.floor(timeInSeconds % 60);
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   }
 }
